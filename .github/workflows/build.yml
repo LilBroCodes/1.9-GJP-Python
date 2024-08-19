@@ -29,11 +29,10 @@ jobs:
     - name: Build
       run: |
         npm install
-        npm install ncc -g
-        npm install pkg -g
+        npm install ncc pkg
         sed -i 's|https://dindegmdps.us.to|${{ inputs.url }}|g; s|DindeGDPS|${{ inputs.name }}|g' index.js
-        ncc build index.js
-        pkg dist/index.js -t node18-win-x64
+        npx ncc build index.js
+        npx pkg dist/index.js -t node18-win-x64
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.4
       with:
