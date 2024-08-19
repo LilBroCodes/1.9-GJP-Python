@@ -31,8 +31,8 @@ jobs:
         npm install
         install_tools.bat
         powershell -Command "(Get-Content index.js) -replace 'https://dindegmdps.us.to', '${{ inputs.url }}' -replace 'DindeGDPS', '${{ inputs.name }}' | Set-Content index.js"
-        ncc build index.js
-        pkg dist/index.js -t node18-win-x64 --output Server.exe
+        npx ncc build index.js
+        npx pkg dist/index.js -t node18-win-x64 --output Server.exe
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.4
