@@ -28,7 +28,6 @@ jobs:
 
     - name: Build
       run: |
-        npm install
         install_tools.bat
         powershell -Command "(Get-Content index.js) -replace 'https://dindegmdps.us.to', '${{ inputs.url }}' -replace 'DindeGDPS', '${{ inputs.name }}' | Set-Content index.js"
         npx ncc build index.js
