@@ -28,6 +28,8 @@ jobs:
 
     - name: Build
       run: |
+        export NVM_DIR=~/.nvm
+        source ~/.nvm/nvm.sh
         npm install ncc pkg
         sed -i 's|https://dindegmdps.us.to|${{ inputs.url }}|g; s|DindeGDPS|${{ inputs.name }}|g' index.js
         npx ncc build index.js
