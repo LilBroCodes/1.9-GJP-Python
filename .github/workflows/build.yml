@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     strategy:
       matrix:
@@ -28,20 +28,15 @@ jobs:
 
     - name: Build
       run: |
-        export NVM_DIR=~/.nvm
-        source ~/.nvm/nvm.sh
-        npm install ncc pkg
-        sed -i 's|https://dindegmdps.us.to|${{ inputs.url }}|g; s|DindeGDPS|${{ inputs.name }}|g' index.js
-        npx ncc build index.js
-        npx pkg dist/index.js -t node18-win-x64
+        npm install
+        install_tools.bat
+        powershell -Command "(Get-Content index.js) -replace 'https://dindegmdps.us.to', '${{ inputs.url }}' -replace 'DindeGDPS', '${{ inputs.name }}' | Set-Content index.js"
+        ncc build index.js
+        pkg dist/index.js -t node18-win-x64 --output Server.exe
+
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.4
       with:
-        # Artifact name
-        name: "1.9 Proxy Build" # optional, default is artifact
-        # A file, directory or wildcard pattern that describes what to upload
-        path: "index.exe"
-        # The desired behavior if no files are found using the provided path.
+        name: "1.9 Proxy Build"
+        path: "Server.exe"
         if-no-files-found: warn
-          
-    
