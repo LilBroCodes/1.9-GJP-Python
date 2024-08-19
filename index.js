@@ -67,7 +67,7 @@ app.post('*', async (req, res) => {
         const check = "" + response.data;
 
         // save it like this DUH
-        if(path == "/database/accounts/loginGJAccount.php" && !check.startsWith("-")) {
+        if(path.endsWith("loginGJAccount.php") && !check.startsWith("-")) {
           gjp = encodeGJP(req.body.password);
           fs.writeFileSync("./.env", "gjp=" + gjp);
           console.log(`Logged in as ${postBody.userName}!`);
